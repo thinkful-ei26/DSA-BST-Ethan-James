@@ -160,9 +160,10 @@ function main(){
   myTree.insert(5,5);
   myTree.insert(7,7);
   // findHeight(myTree);
-  let myArrayCounter = findHeight(myTree);
-  console.log(myArrayCounter);
-
+  //let myArrayCounter = findHeight(myTree);
+  //console.log(myArrayCounter);
+  console.log("Tree log is: ", isItBst(myTree));
+ 
   console.log('Done');
 
 }
@@ -196,7 +197,42 @@ function findHeight(BST, counter=1, myTally = []){
   }
   // return this.left.findHeight(BST, counter + 1);
   // BST._findMin();
+
 }
 
 // let myArrayCounter = [...findHeight(myTree)];
 
+function isItBst(tree, alwaysGreater = 0){
+/*input: a tree
+* output: boolean true if tree is BST else false
+  temp = is the next value always > temp 
+    yes- continue
+    no! return false stop here,
+*/
+//  if(){//has no children left child
+//     if (alwaysGreater < this.key){
+//         return false;
+//     }
+//     alwaysGreater=this.key;
+//     return alwaysGreater;
+//console.log("Start of func: ", alwaysGreater);
+ // **run left stuff then compare self, then run right stuff, then return true**
+ if(tree.left){
+    isItBst(tree.left, alwaysGreater);//here nested calls are running, 
+     //console.log("here:", alwaysGreater);//expect 0 or 1?// 0 or 4?
+     //here ^^ is done, 1 has been returned, alG === 0;
+ }
+ // here left side is done
+ // compare the new alway value to itself
+ if (tree.key < alwaysGreater){
+    return false;
+ }
+ alwaysGreater = tree.key;
+ // then run right side stuff
+ if(tree.right){
+    isItBst(tree.right, alwaysGreater);
+ }
+ // here left side and right side are done 
+ return alwaysGreater;// 1 the variable or the primitive evaluation
+ // compare to number and return key as new greater value
+}
