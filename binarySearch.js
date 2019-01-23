@@ -151,6 +151,14 @@ _replaceWith(node) {
 }
 function main(){
     const myTree = new BinarySearchTree();
+    myTree.insert(3, 3);
+    myTree.insert(1,1);
+    myTree.insert(4,4);
+    myTree.insert(6,6);
+    myTree.insert(9,9);
+    myTree.insert(2,2);
+    myTree.insert(5,5);
+    myTree.insert(7,7);
     console.log("Done");
 }
 main();
