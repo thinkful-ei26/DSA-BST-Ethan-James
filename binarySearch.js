@@ -165,25 +165,25 @@ function main(){
   // myTree.insert(2,2);
   // myTree.insert(5,5);
   // myTree.insert(7,7);
+  
 
-  myTree.insert(9,9);
-  myTree.insert(7,7);
   myTree.insert(5,5);
+  myTree.insert(7,7);
+  myTree.insert(6,6);
+  myTree.insert(9,9);
   myTree.insert(4,4);
+  myTree.insert(4.5,4.5);
+
   myTree.insert(3, 3);
-
-
-
-
-
-  // findHeight(myTree);
-  //let myArrayCounter = findHeight(myTree);
-  //console.log(myArrayCounter);
+  
+  //console.log(findHeight(myTree));
+  let myArrayCounter = findHeight(myTree);
+  console.log(myArrayCounter);
   // console.log('Tree log is: ', isItBst(myTree));
-
+  console.log(balanced(myTree));
   // console.log('Tree log is: ', isItBst(fakeTree));
 
-  console.log(thirdLargestNode(myTree));
+  //console.log(thirdLargestNode(myTree));
  
   console.log('Done');
 
@@ -198,27 +198,31 @@ function findHeight(BST, counter=1, myTally = []){
   if (!BST.left && !BST.right) {
     // console.log(counter);
     myTally.push(counter);
+   // console.log('hello counter', counter);
     return;
   }
   else if (!BST.left) {
     // console.log(counter);
-    return findHeight(BST.right, counter + 1, myTally);
+    findHeight(BST.right, counter + 1, myTally);
+    myTally.push(counter);
 
   }
   else if (!BST.right) {
     // console.log(counter);
-    return findHeight(BST.left, counter + 1, myTally);
+    findHeight(BST.left, counter + 1, myTally);
+    myTally.push(counter);
   }
   else if (BST.right && BST.left) {
     findHeight(BST.left, counter + 1, myTally);
     findHeight(BST.right, counter + 1, myTally);
-    // return myTally;
-    return Math.max(...myTally);
+    //return myTally;
+    //return Math.max(...myTally);
 
   }
   // return this.left.findHeight(BST, counter + 1);
   // BST._findMin();
-
+  //console.log("Array here!");
+ return myTally;
 }
 
 // let myArrayCounter = [...findHeight(myTree)];
@@ -239,7 +243,7 @@ function isItBst(tree, alwaysGreater = []){
   //console.log("Start of func: ", alwaysGreater);
   // **run left stuff then compare self, then run right stuff, then return true**
   if(tree.left){
-    console.log(alwaysGreater);
+   // console.log(alwaysGreater);
     isItBst(tree.left, alwaysGreater);//here nested calls are running, 
     //console.log("here:", alwaysGreater);//expect 0 or 1?// 0 or 4?
     //here ^^ is done, 1 has been returned, alG === 0;
@@ -252,7 +256,7 @@ function isItBst(tree, alwaysGreater = []){
   alwaysGreater.push(tree.key);
   // then run right side stuff
   if(tree.right){
-    console.log(alwaysGreater);
+   // console.log(alwaysGreater);
     isItBst(tree.right, alwaysGreater);
   }
   // here left side and right side are done 
@@ -280,4 +284,27 @@ function thirdLargestNode(tree){
     } else return tree.parent.parent.value;
   }
   return thirdLargestNode(tree.right);
+}
+
+function balanced(tree){
+  /*
+  input: is a tree
+  output: bool
+  */
+ let myArrayCounter = findHeight(tree);
+ //here we have an array of all heights
+ if(myArrayCounter.length === 1){
+   //case: a single leaf..
+   return false;
+ }
+ let firsties = myArrayCounter[0];
+ for(let i=0; i< myArrayCounter.length; i++){
+   // +-1 to firsties if ~ false 
+   //[ 3, 3, 3, 4, 1  9... n] => false
+   //[ 3, 3, 3, 3, 3, 3, ] => true
+   if (myArrayCounter[i] > firsties +1 || myArrayCounter[i] < firsties -1) {
+     return false; // here the tree is not balanced
+   }
+ }//end loop
+ return true;//tree passed balanced tires
 }
