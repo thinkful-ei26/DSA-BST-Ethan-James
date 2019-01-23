@@ -44,121 +44,159 @@ class BinarySearchTree {
       console.error('Key not found');
     }
   }
-//   removeFromScratch(key){
-//     //step 1 find the node to delete first
-//     if(this.key===key){
-//         //handle the deleteing part here
-//         //step 2 key is found:
-//            if(!this.left && !this.right){
-//                 //no children
-//                 //compare this.parent.key > || < to this.key ,,set let or right to null
-//                 if(this.parent.key > this.key){
-//                     this.parent.left = null;
-//                 }
-//                 else if(this.parent.key < this.key){
-//                     this.parent.right = null;
-//                 }
-//             }
-//             else if(!this.left || !this.right){
-//                 //1child      in example,, remove(6) this.right=== 8 this.left ===null
-//                 if(!this.left){
-//                     this.parent.right = this.right;
-//                 } else {
-//                     //this.parent.left =;
-//                 }
-//             }
-//             else {
-//                 //2children
+  //   removeFromScratch(key){
+  //     //step 1 find the node to delete first
+  //     if(this.key===key){
+  //         //handle the deleteing part here
+  //         //step 2 key is found:
+  //            if(!this.left && !this.right){
+  //                 //no children
+  //                 //compare this.parent.key > || < to this.key ,,set let or right to null
+  //                 if(this.parent.key > this.key){
+  //                     this.parent.left = null;
+  //                 }
+  //                 else if(this.parent.key < this.key){
+  //                     this.parent.right = null;
+  //                 }
+  //             }
+  //             else if(!this.left || !this.right){
+  //                 //1child      in example,, remove(6) this.right=== 8 this.left ===null
+  //                 if(!this.left){
+  //                     this.parent.right = this.right;
+  //                 } else {
+  //                     //this.parent.left =;
+  //                 }
+  //             }
+  //             else {
+  //                 //2children
 
-//             }
+  //             }
         
-//     }
-//     else if(key < this.key&& this.left){
-//         this.left.remove(key);
-//     }
-//     else if(key > this.key&& this.right){
-//         this.right.remove(key);
-//     }
-//     else {
-//         console.log('key not found');
-//         return;
-//     }
+  //     }
+  //     else if(key < this.key&& this.left){
+  //         this.left.remove(key);
+  //     }
+  //     else if(key > this.key&& this.right){
+  //         this.right.remove(key);
+  //     }
+  //     else {
+  //         console.log('key not found');
+  //         return;
+  //     }
     
-//   }
-remove(key){
+  //   }
+  remove(key){
     if(this.key==key){
-        if(this.left && this.right){
-            const successor = this.right._findMin();
-            this.key = successor.key;
-            this.value = successor.value;
-            successor.remove(successor.key);
-        }
-        else if(this.left){
-            this._replaceWith(this.left);
-        }
-        else if (this.right){
-            this._replaceWith(this.right);
-        }
-        else {
-            this._replaceWith(null);
-        }
+      if(this.left && this.right){
+        const successor = this.right._findMin();
+        this.key = successor.key;
+        this.value = successor.value;
+        successor.remove(successor.key);
+      }
+      else if(this.left){
+        this._replaceWith(this.left);
+      }
+      else if (this.right){
+        this._replaceWith(this.right);
+      }
+      else {
+        this._replaceWith(null);
+      }
     }
     else if(key< this.key && this.left){
-        this.left.remove(key);
+      this.left.remove(key);
     }
     else if (key > this.key && this.right){
-        this.right.remove(key);
+      this.right.remove(key);
     }
     else {
-        console.log("No Key Found");
+      console.log('No Key Found');
     }
-}
-_findMin() {
+  }
+  _findMin() {
     if (!this.left) {
-        return this;
+      return this;
     }
     return this.left._findMin();
-}
-_replaceWith(node) {
+  }
+  _replaceWith(node) {
     if (this.parent) {
-        if (this == this.parent.left) {
-            this.parent.left = node;
-        }
-        else if (this == this.parent.right) {
-            this.parent.right = node;
-        }
+      if (this == this.parent.left) {
+        this.parent.left = node;
+      }
+      else if (this == this.parent.right) {
+        this.parent.right = node;
+      }
 
-        if (node) {
-            node.parent = this.parent;
-        }
+      if (node) {
+        node.parent = this.parent;
+      }
     }
     else {
-        if (node) {
-            this.key = node.key;
-            this.value = node.value;
-            this.left = node.left;
-            this.right = node.right;
-        }
-        else {
-            this.key = null;
-            this.value = null;
-            this.left = null;
-            this.right = null;
-        }
+      if (node) {
+        this.key = node.key;
+        this.value = node.value;
+        this.left = node.left;
+        this.right = node.right;
+      }
+      else {
+        this.key = null;
+        this.value = null;
+        this.left = null;
+        this.right = null;
+      }
     }
-}
+  }
 
 }
 function main(){
-    const myTree = new BinarySearchTree();
-    myTree.insert(3, 3);
-    myTree.insert(1,1);
-    myTree.insert(4,4);
-    myTree.insert(6,6);
-    myTree.insert(9,9);
-    myTree.insert(2,2);
-    myTree.insert(5,5);
-    myTree.insert(7,7);
-    console.log("Done");
+  const myTree = new BinarySearchTree();
+  myTree.insert(3, 3);
+  myTree.insert(1,1);
+  myTree.insert(4,4);
+  myTree.insert(6,6);
+  myTree.insert(9,9);
+  myTree.insert(2,2);
+  myTree.insert(5,5);
+  myTree.insert(7,7);
+  // findHeight(myTree);
+  let myArrayCounter = findHeight(myTree);
+  console.log(myArrayCounter);
+
+  console.log('Done');
+
 }
 main();
+
+function findHeight(BST, counter=1, myTally = []){
+  // console.log(BST);
+
+  // let counter = 0;
+  // console.log(counter);
+  if (!BST.left && !BST.right) {
+    // console.log(counter);
+    myTally.push(counter);
+    return;
+  }
+  else if (!BST.left) {
+    // console.log(counter);
+    return findHeight(BST.right, counter + 1, myTally);
+
+  }
+  else if (!BST.right) {
+    // console.log(counter);
+    return findHeight(BST.left, counter + 1, myTally);
+  }
+  else if (BST.right && BST.left) {
+    findHeight(BST.left, counter + 1, myTally);
+    findHeight(BST.right, counter + 1, myTally);
+    // return myTally;
+    return Math.max(...myTally);
+
+  }
+  // return this.left.findHeight(BST, counter + 1);
+  // BST._findMin();
+}
+
+// let myArrayCounter = [...findHeight(myTree)];
+
