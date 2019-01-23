@@ -151,18 +151,39 @@ class BinarySearchTree {
 }
 function main(){
   const myTree = new BinarySearchTree();
-  myTree.insert(3, 3);
-  myTree.insert(1,1);
-  myTree.insert(4,4);
-  myTree.insert(6,6);
+  const fakeTree = new BinarySearchTree();
+  fakeTree.insert(2, 2);
+  fakeTree.insert(99, 99);
+  fakeTree.insert(1, 1);
+  fakeTree.key = -42;
+  // console.log(fakeTree);
+  // myTree.insert(3, 3);
+  // myTree.insert(1,1);
+  // myTree.insert(4,4);
+  // // myTree.insert(6,6);
+  // myTree.insert(9,9);
+  // myTree.insert(2,2);
+  // myTree.insert(5,5);
+  // myTree.insert(7,7);
+
   myTree.insert(9,9);
-  myTree.insert(2,2);
-  myTree.insert(5,5);
   myTree.insert(7,7);
+  myTree.insert(5,5);
+  myTree.insert(4,4);
+  myTree.insert(3, 3);
+
+
+
+
+
   // findHeight(myTree);
   //let myArrayCounter = findHeight(myTree);
   //console.log(myArrayCounter);
-  console.log("Tree log is: ", isItBst(myTree));
+  // console.log('Tree log is: ', isItBst(myTree));
+
+  // console.log('Tree log is: ', isItBst(fakeTree));
+
+  console.log(thirdLargestNode(myTree));
  
   console.log('Done');
 
@@ -202,37 +223,61 @@ function findHeight(BST, counter=1, myTally = []){
 
 // let myArrayCounter = [...findHeight(myTree)];
 
-function isItBst(tree, alwaysGreater = 0){
+function isItBst(tree, alwaysGreater = []){
 /*input: a tree
 * output: boolean true if tree is BST else false
   temp = is the next value always > temp 
     yes- continue
     no! return false stop here,
 */
-//  if(){//has no children left child
-//     if (alwaysGreater < this.key){
-//         return false;
-//     }
-//     alwaysGreater=this.key;
-//     return alwaysGreater;
-//console.log("Start of func: ", alwaysGreater);
- // **run left stuff then compare self, then run right stuff, then return true**
- if(tree.left){
+  //  if(){//has no children left child
+  //     if (alwaysGreater < this.key){
+  //         return false;
+  //     }
+  //     alwaysGreater=this.key;
+  //     return alwaysGreater;
+  //console.log("Start of func: ", alwaysGreater);
+  // **run left stuff then compare self, then run right stuff, then return true**
+  if(tree.left){
+    console.log(alwaysGreater);
     isItBst(tree.left, alwaysGreater);//here nested calls are running, 
-     //console.log("here:", alwaysGreater);//expect 0 or 1?// 0 or 4?
-     //here ^^ is done, 1 has been returned, alG === 0;
- }
- // here left side is done
- // compare the new alway value to itself
- if (tree.key < alwaysGreater){
+    //console.log("here:", alwaysGreater);//expect 0 or 1?// 0 or 4?
+    //here ^^ is done, 1 has been returned, alG === 0;
+  }
+  // here left side is done
+  // compare the new alway value to itself
+  if (tree.key < alwaysGreater[alwaysGreater.length - 1]){
     return false;
- }
- alwaysGreater = tree.key;
- // then run right side stuff
- if(tree.right){
+  }
+  alwaysGreater.push(tree.key);
+  // then run right side stuff
+  if(tree.right){
+    console.log(alwaysGreater);
     isItBst(tree.right, alwaysGreater);
- }
- // here left side and right side are done 
- return alwaysGreater;// 1 the variable or the primitive evaluation
- // compare to number and return key as new greater value
+  }
+  // here left side and right side are done 
+  return alwaysGreater;// 1 the variable or the primitive evaluation
+  // compare to number and return key as new greater value
+}
+
+function thirdLargestNode(tree){
+  //working from function to find largest node
+  if (!tree.right) {
+    // console.log(tree.value);
+    if(tree.left){
+      // console.log(tree.left.value);
+      if(tree.left.right){
+        return tree.left.value;
+      } 
+      else if(tree.left.left){
+        return tree.left.left.value;
+      } else {
+        return tree.parent.value;
+      }
+    }
+    else if (tree.parent.left){
+      return tree.parent.left.value;
+    } else return tree.parent.parent.value;
+  }
+  return thirdLargestNode(tree.right);
 }
